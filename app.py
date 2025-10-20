@@ -6,12 +6,6 @@ from promoter_hill import hill_expression
 from enzyme_kinetics import enzyme_model
 from system_logic import system_dynamics
 
-st.markdown("""
-    <style>
-        .block-container { padding-top: 1rem; padding-bottom: 1rem; }
-        .stSlider { margin-bottom: 0.5rem; }
-    </style>
-""", unsafe_allow_html=True)
 
 st.set_page_config(page_title="Biospray Simulations", layout="wide")
 st.title("🧬 PAH-Detecting & Degrading Biospray — Interactive Models")
@@ -21,56 +15,68 @@ tab1, tab2, tab3 = st.tabs(["Promoter Activation", "Enzyme Kinetics", "System-Le
 # ── 1. Promoter activation ─────────────────────────────────────────────────────
 with tab1:
     st.subheader("Promoter activation (Hill function)")
-    Emax = st.slider('Emax (max expression)', 0.5, 2.0, 1.0, 0.1)
-    Kd = st.slider('Kd (half activation constant)', 0.5, 5.0, 2.0, 0.1)
-    n = st.slider('Hill coefficient (n)', 1.0, 4.0, 2.0, 0.5)
+    col1, col2 = st.columns([1, 2])
 
-    PAH, Expr = hill_expression(Emax, Kd, n)
-    fig, ax = plt.subplots(figsize=(5,3))
-    ax.plot(PAH, Expr, linewidth=2, color='royalblue')
-    ax.set_xlabel("PAH concentration (a.u.)")
-    ax.set_ylabel("Normalized promoter output")
-    ax.set_title("Promoter activation curve")
-    ax.grid(True)
-    st.pyplot(fig, use_container_width=True)
+    with col1:
+        Emax = st.slider('Emax (max expression)', 0.5, 2.0, 1.0, 0.1)
+        Kd = st.slider('Kd (half activation constant)', 0.5, 5.0, 2.0, 0.1)
+        n = st.slider('Hill coefficient (n)', 1.0, 4.0, 2.0, 0.5)
+
+    with col2:
+        PAH, Expr = hill_expression(Emax, Kd, n)
+        fig, ax = plt.subplots(figsize=(5,3))
+        ax.plot(PAH, Expr, linewidth=2, color='royalblue')
+        ax.set_xlabel("PAH concentration (a.u.)")
+        ax.set_ylabel("Normalized promoter output")
+        ax.set_title("Promoter activation curve")
+        ax.grid(True)
+        st.pyplot(fig, use_container_width=True)
+
 
 # ── 2. Enzyme kinetics ─────────────────────────────────────────────────────────
 with tab2:
     st.subheader("Enzyme kinetics: multi-step PAH degradation")
-    V1 = st.slider("Vmax₁ (laccase)", 0.1, 2.0, 1.0, 0.1)
-    Km1 = st.slider("Km₁", 0.1, 1.0, 0.5, 0.1)
-    V2 = st.slider("Vmax₂ (RHD)", 0.1, 2.0, 0.8, 0.1)
-    Km2 = st.slider("Km₂", 0.1, 1.0, 0.3, 0.1)
-    S0 = st.slider("Initial PAH concentration", 5.0, 20.0, 10.0, 1.0)
+    col1, col2 = st.columns([1, 2])
 
-    t, S, I, P = enzyme_model(V1, Km1, V2, Km2, S0)
-    fig, ax = plt.subplots(figsize=(5,3))
-    ax.plot(t, S, label='PAH (S)', linewidth=2)
-    ax.plot(t, I, '--', label='Intermediate (I)', linewidth=2)
-    ax.plot(t, P, ':', label='Product (P)', linewidth=2)
-    ax.set_xlabel("Time (h)")
-    ax.set_ylabel("Concentration (a.u.)")
-    ax.set_title("Simulated multi-step PAH degradation")
-    ax.legend(); ax.grid(True)
-    st.pyplot(fig, use_container_width=True)
+    with col1:
+        V1 = st.slider("Vmax₁ (laccase)", 0.1, 2.0, 1.0, 0.1)
+        Km1 = st.slider("Km₁", 0.1, 1.0, 0.5, 0.1)
+        V2 = st.slider("Vmax₂ (RHD)", 0.1, 2.0, 0.8, 0.1)
+        Km2 = st.slider("Km₂", 0.1, 1.0, 0.3, 0.1)
+        S0 = st.slider("Initial PAH concentration", 5.0, 20.0, 10.0, 1.0)
 
+    with col2:
+        t, S, I, P = enzyme_model(V1, Km1, V2, Km2, S0)
+        fig, ax = plt.subplots(figsize=(5,3))
+        ax.plot(t, S, label='PAH (S)', linewidth=2)
+        ax.plot(t, I, '--', label='Intermediate (I)', linewidth=2)
+        ax.plot(t, P, ':', label='Product (P)', linewidth=2)
+        ax.set_xlabel("Time (h)")
+        ax.set_ylabel("Concentration (a.u.)")
+        ax.set_title("Multi-step PAH degradation")
+        ax.legend(); ax.grid(True)
+        st.pyplot(fig, use_container_width=True)
 
 # ── 3. System-level logic ──────────────────────────────────────────────────────
 with tab3:
     st.subheader("System-level pollutant / kill-switch dynamics")
-    decay = st.slider("PAH decay rate", 0.1, 1.0, 0.3, 0.05)
-    threshold = st.slider("Kill-switch threshold", 0.01, 0.5, 0.1, 0.01)
-    t, PAH, Enz, Kill = system_dynamics(decay, threshold)
+    col1, col2 = st.columns([1, 2])
 
-    fig, ax = plt.subplots(figsize=(5,3))
-    ax.plot(t, PAH, label='PAH', linewidth=2)
-    ax.plot(t, Enz, label='Enzyme', linewidth=2)
-    ax.plot(t, Kill, label='Kill-switch', linewidth=2)
-    ax.set_xlabel("Time (h)")
-    ax.set_ylabel("Normalized level")
-    ax.set_title("Integrated system response")
-    ax.legend(); ax.grid(True)
-    st.pyplot(fig, use_container_width=True)
+    with col1:
+        decay = st.slider("PAH decay rate", 0.1, 1.0, 0.3, 0.05)
+        threshold = st.slider("Kill-switch threshold", 0.01, 0.5, 0.1, 0.01)
+
+    with col2:
+        t, PAH, Enz, Kill = system_dynamics(decay, threshold)
+        fig, ax = plt.subplots(figsize=(5,3))
+        ax.plot(t, PAH, label='PAH', linewidth=2)
+        ax.plot(t, Enz, label='Enzyme', linewidth=2)
+        ax.plot(t, Kill, label='Kill-switch', linewidth=2)
+        ax.set_xlabel("Time (h)")
+        ax.set_ylabel("Normalized level")
+        ax.set_title("Integrated system response")
+        ax.legend(); ax.grid(True)
+        st.pyplot(fig, use_container_width=True)
 
 
 st.markdown("---")
