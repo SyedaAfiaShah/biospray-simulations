@@ -2,9 +2,10 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
-from models.promoter_hill import hill_expression
-from models.enzyme_kinetics import enzyme_model
-from models.system_logic import system_dynamics
+from promoter_hill import hill_expression
+from enzyme_kinetics import enzyme_model
+from system_logic import system_dynamics
+
 
 st.set_page_config(page_title="Biospray Simulations", layout="wide")
 st.title("🧬 PAH-Detecting & Degrading Biospray — Interactive Models")
