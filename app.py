@@ -25,9 +25,9 @@ with tab0:
     with col2:
         t, P, K, D = logic_behavior()
         fig, ax = plt.subplots(figsize=(4.5,2))
-        ax.step(t, P, label='Pollutant (P)', linewidth=2)
-        ax.step(t, D, label='Degradation (D)', linewidth=2)
-        ax.step(t, K, label='Kill-switch (K)', linewidth=2)
+        ax.step(t, P + 0.05, label='Pollutant (P)', linewidth=2, color='royalblue') 
+        ax.step(t, D, label='Degradation (D)', linewidth=2, color='green')
+        ax.step(t, K - 0.05, label='Kill-switch (K)', linewidth=2, color='red')      
         ax.set_xlabel("Time (arbitrary units)", fontsize=9)
         ax.set_ylabel("Logic state (0/1)", fontsize=9)
         ax.set_title("Genetic Circuit Logic Behavior", fontsize=10, pad=4)
