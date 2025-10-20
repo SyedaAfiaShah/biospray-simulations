@@ -8,7 +8,7 @@ from system_logic import system_dynamics
 
 
 st.set_page_config(page_title="Biospray Simulations", layout="wide")
-st.markdown("<h1 style='text-align: center;'>🧬 Interactive Models for PAH Detecting and Degrading Biospray</h1>", unsafe_allow_html=True)
+st.title("🧬 Interactive Models for PAH Detecting and Degrading Biospray")
 
 tab1, tab2, tab3 = st.tabs(["Promoter Activation", "Enzyme Kinetics", "System-Level Logic"])
 
