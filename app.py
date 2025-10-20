@@ -6,6 +6,12 @@ from promoter_hill import hill_expression
 from enzyme_kinetics import enzyme_model
 from system_logic import system_dynamics
 
+st.markdown("""
+    <style>
+        .block-container { padding-top: 1rem; padding-bottom: 1rem; }
+        .stSlider { margin-bottom: 0.5rem; }
+    </style>
+""", unsafe_allow_html=True)
 
 st.set_page_config(page_title="Biospray Simulations", layout="wide")
 st.title("🧬 PAH-Detecting & Degrading Biospray — Interactive Models")
@@ -20,13 +26,13 @@ with tab1:
     n = st.slider('Hill coefficient (n)', 1.0, 4.0, 2.0, 0.5)
 
     PAH, Expr = hill_expression(Emax, Kd, n)
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(5,3))
     ax.plot(PAH, Expr, linewidth=2, color='royalblue')
     ax.set_xlabel("PAH concentration (a.u.)")
     ax.set_ylabel("Normalized promoter output")
     ax.set_title("Promoter activation curve")
     ax.grid(True)
-    st.pyplot(fig)
+    st.pyplot(fig, use_container_width=True)
 
 # ── 2. Enzyme kinetics ─────────────────────────────────────────────────────────
 with tab2:
@@ -38,7 +44,7 @@ with tab2:
     S0 = st.slider("Initial PAH concentration", 5.0, 20.0, 10.0, 1.0)
 
     t, S, I, P = enzyme_model(V1, Km1, V2, Km2, S0)
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(5,3))
     ax.plot(t, S, label='PAH (S)', linewidth=2)
     ax.plot(t, I, '--', label='Intermediate (I)', linewidth=2)
     ax.plot(t, P, ':', label='Product (P)', linewidth=2)
@@ -46,7 +52,8 @@ with tab2:
     ax.set_ylabel("Concentration (a.u.)")
     ax.set_title("Simulated multi-step PAH degradation")
     ax.legend(); ax.grid(True)
-    st.pyplot(fig)
+    st.pyplot(fig, use_container_width=True)
+
 
 # ── 3. System-level logic ──────────────────────────────────────────────────────
 with tab3:
@@ -55,7 +62,7 @@ with tab3:
     threshold = st.slider("Kill-switch threshold", 0.01, 0.5, 0.1, 0.01)
     t, PAH, Enz, Kill = system_dynamics(decay, threshold)
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(5,3))
     ax.plot(t, PAH, label='PAH', linewidth=2)
     ax.plot(t, Enz, label='Enzyme', linewidth=2)
     ax.plot(t, Kill, label='Kill-switch', linewidth=2)
@@ -63,7 +70,8 @@ with tab3:
     ax.set_ylabel("Normalized level")
     ax.set_title("Integrated system response")
     ax.legend(); ax.grid(True)
-    st.pyplot(fig)
+    st.pyplot(fig, use_container_width=True)
+
 
 st.markdown("---")
-st.caption("Built with Streamlit • Models simplified from the synthetic biology project by [Your Name]")
+st.caption("Built with Streamlit • Models simplified from the synthetic biology project by [Syeda Afia Shah]")
