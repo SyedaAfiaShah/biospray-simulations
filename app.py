@@ -6,9 +6,16 @@ from promoter_hill import hill_expression
 from enzyme_kinetics import enzyme_model
 from system_logic import system_dynamics
 
+st.markdown("""
+<style>
+.block-container {padding-top: 0.5rem; padding-bottom: 0.5rem;}
+.stSlider {margin-bottom: 0.4rem;}
+[data-testid="stHorizontalBlock"] {align-items: start;}
+</style>
+""", unsafe_allow_html=True)
 
 st.set_page_config(page_title="Biospray Simulations", layout="wide")
-st.title("🧬 PAH-Detecting & Degrading Biospray — Interactive Models")
+st.title("🧬 PAH-Detecting & Degrading Biospray - Interactive Models")
 
 tab1, tab2, tab3 = st.tabs(["Promoter Activation", "Enzyme Kinetics", "System-Level Logic"])
 
@@ -24,12 +31,13 @@ with tab1:
 
     with col2:
         PAH, Expr = hill_expression(Emax, Kd, n)
-        fig, ax = plt.subplots(figsize=(5,3))
+        fig, ax = plt.subplots(figsize=(4.5,2.5))   
         ax.plot(PAH, Expr, linewidth=2, color='royalblue')
-        ax.set_xlabel("PAH concentration (a.u.)")
-        ax.set_ylabel("Normalized promoter output")
-        ax.set_title("Promoter activation curve")
-        ax.grid(True)
+        ax.set_xlabel("PAH concentration (a.u.)", fontsize=9)
+        ax.set_ylabel("Normalized output", fontsize=9)
+        ax.set_title("Promoter activation curve", fontsize=10, pad=4)
+        ax.tick_params(labelsize=8)
+        ax.grid(True, linewidth=0.4)
         st.pyplot(fig, use_container_width=True)
 
 
@@ -47,15 +55,18 @@ with tab2:
 
     with col2:
         t, S, I, P = enzyme_model(V1, Km1, V2, Km2, S0)
-        fig, ax = plt.subplots(figsize=(5,3))
+        fig, ax = plt.subplots(figsize=(4.5,2.5))
         ax.plot(t, S, label='PAH (S)', linewidth=2)
         ax.plot(t, I, '--', label='Intermediate (I)', linewidth=2)
         ax.plot(t, P, ':', label='Product (P)', linewidth=2)
-        ax.set_xlabel("Time (h)")
-        ax.set_ylabel("Concentration (a.u.)")
-        ax.set_title("Multi-step PAH degradation")
-        ax.legend(); ax.grid(True)
+        ax.set_xlabel("Time (h)", fontsize=9)
+        ax.set_ylabel("Concentration (a.u.)", fontsize=9)
+        ax.set_title("Multi-step PAH degradation", fontsize=10, pad=4)
+        ax.tick_params(labelsize=8)
+        ax.legend(fontsize=8, frameon=False)
+        ax.grid(True, linewidth=0.4)
         st.pyplot(fig, use_container_width=True)
+
 
 # ── 3. System-level logic ──────────────────────────────────────────────────────
 with tab3:
@@ -68,15 +79,18 @@ with tab3:
 
     with col2:
         t, PAH, Enz, Kill = system_dynamics(decay, threshold)
-        fig, ax = plt.subplots(figsize=(5,3))
+        fig, ax = plt.subplots(figsize=(4.5,2.5))
         ax.plot(t, PAH, label='PAH', linewidth=2)
         ax.plot(t, Enz, label='Enzyme', linewidth=2)
         ax.plot(t, Kill, label='Kill-switch', linewidth=2)
-        ax.set_xlabel("Time (h)")
-        ax.set_ylabel("Normalized level")
-        ax.set_title("Integrated system response")
-        ax.legend(); ax.grid(True)
+        ax.set_xlabel("Time (h)", fontsize=9)
+        ax.set_ylabel("Normalized level", fontsize=9)
+        ax.set_title("Integrated system response", fontsize=10, pad=4)
+        ax.tick_params(labelsize=8)
+        ax.legend(fontsize=8, frameon=False)
+        ax.grid(True, linewidth=0.4)
         st.pyplot(fig, use_container_width=True)
+
 
 
 st.markdown("---")
