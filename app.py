@@ -8,11 +8,11 @@ from system_logic import system_dynamics
 
 
 st.set_page_config(page_title="Biospray Simulations", layout="wide")
-st.title("🧬 PAH-Detecting & Degrading Biospray - Interactive Models")
+st.markdown("<h1 style='text-align: center;'>🧬 Interactive Models for PAH Detecting and Degrading Biospray</h1>", unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(["Promoter Activation", "Enzyme Kinetics", "System-Level Logic"])
 
-# ── 1. Promoter activation ─────────────────────────────────────────────────────
+# 1. Promoter activation
 with tab1:
     st.subheader("Promoter activation (Hill function)")
     col1, col2 = st.columns([1, 2])
@@ -34,7 +34,7 @@ with tab1:
         st.pyplot(fig, use_container_width=True)
 
 
-# ── 2. Enzyme kinetics ─────────────────────────────────────────────────────────
+#  2. Enzyme kinetics
 with tab2:
     st.subheader("Enzyme kinetics: multi-step PAH degradation")
     col1, col2 = st.columns([1, 2])
@@ -61,7 +61,7 @@ with tab2:
         st.pyplot(fig, use_container_width=True)
 
 
-# ── 3. System-level logic ──────────────────────────────────────────────────────
+# 3. System-level logic
 with tab3:
     st.subheader("System-level pollutant / kill-switch dynamics")
     col1, col2 = st.columns([1, 2])
