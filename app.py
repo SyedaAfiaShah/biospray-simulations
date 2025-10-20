@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
-from system_logic import logic_behavior
+from logic_behavior import logic_behavior
 from promoter_hill import hill_expression
 from enzyme_kinetics import enzyme_model
 from system_logic import system_dynamics
