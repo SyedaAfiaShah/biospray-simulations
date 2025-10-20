@@ -10,31 +10,7 @@ from system_logic import system_dynamics
 st.set_page_config(page_title="Biospray Simulations", layout="wide")
 st.title("🧬 Interactive Models for PAH Detecting and Degrading Biospray")
 
-tab0, tab1, tab2, tab3 = st.tabs(["Logic Gate Behavior", "Promoter Activation", "Enzyme Kinetics", "System-Level Logic"])
-
-#0. Logic Gate Behavior
-with tab0:
-    st.subheader("Logic Gate Behavior Simulation")
-
-    col1, col2 = st.columns([1,2])
-    with col1:
-        st.write("This simulation shows Boolean interactions between the pollutant (P), kill-switch (K), and degradation module (D).")
-        st.write("1 = ON, 0 = OFF. The biosafety circuit ensures degradation activates only when pollutant is present, and the kill-switch activates when pollutant is absent.")
-
-    with col2:
-        t, P, K, D = logic_behavior()
-        fig, ax = plt.subplots(figsize=(4.5,2))
-        ax.step(t, P, label='Pollutant (P)', linewidth=2)
-        ax.step(t, D, label='Degradation (D)', linewidth=2)
-        ax.step(t, K, label='Kill-switch (K)', linewidth=2)
-        ax.set_xlabel("Time (arbitrary units)", fontsize=9)
-        ax.set_ylabel("Logic state (0/1)", fontsize=9)
-        ax.set_title("Genetic Circuit Logic Behavior", fontsize=10, pad=4)
-        ax.tick_params(labelsize=8)
-        ax.set_yticks([0,1])
-        ax.legend(fontsize=8, frameon=False)
-        ax.grid(True, linewidth=0.4)
-        st.pyplot(fig, use_container_width=True)
+tab1, tab2, tab3 = st.tabs(["Promoter Activation", "Enzyme Kinetics", "System-Level Logic"])
 
 # 1. Promoter activation
 with tab1:
