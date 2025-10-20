@@ -6,13 +6,6 @@ from promoter_hill import hill_expression
 from enzyme_kinetics import enzyme_model
 from system_logic import system_dynamics
 
-st.markdown("""
-<style>
-.block-container {padding-top: 0.5rem; padding-bottom: 0.5rem;}
-.stSlider {margin-bottom: 0.4rem;}
-[data-testid="stHorizontalBlock"] {align-items: start;}
-</style>
-""", unsafe_allow_html=True)
 
 st.set_page_config(page_title="Biospray Simulations", layout="wide")
 st.title("🧬 PAH-Detecting & Degrading Biospray - Interactive Models")
